@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  db:
+    image: 'postgres:12.5-alpine'
+    ports:
+      - '2345:5432'
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'mydb'
+
+  server:
+    build: .
+    ports:
+      - '5007:5007'
+    environment:
+      DATABASE_URL: 'postgresql://postgres:postgres@db:5432/mydb?schema=public'
